@@ -1,0 +1,11 @@
+{
+  "name": "package1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./index.ts",
+  "scripts": {
+    "dev": "ts-node-dev index.ts"
+  },
+  "author": "Priyanka Choudhary",
+  "license": "ISC"
+}
