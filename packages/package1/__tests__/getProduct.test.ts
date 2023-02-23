@@ -47,7 +47,7 @@ describe('Check the response for GET request', () => {
                 const response = await request(app).get('/product');
                 expect(response.statusCode).toBe(200);
                 expect(getProductMock).toHaveBeenCalledTimes(1);
-                // console.log(response.body);
+                 console.log(response.body);
                 // console.log(response);
                 expect(response.body).toEqual([
                         {
