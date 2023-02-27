@@ -1,6 +1,6 @@
 require('dotenv').config();
 import app from 'package1/index';
-import express, { Application } from 'express';
+import express from 'express';
 
 app.use(express.json())
 app.use('/product',require('./src/routes/addProduct'));
