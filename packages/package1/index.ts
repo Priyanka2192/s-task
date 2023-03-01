@@ -11,4 +11,5 @@ sequelize.authenticate().then(() => {
     console.error('Error message : ' + err.message);
 });
 
-export default app; 
+ export default app; 
+// module.exports = app; 

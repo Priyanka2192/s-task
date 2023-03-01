@@ -4,11 +4,14 @@
   "description": "Learn about workspaces",
   "main": "index.ts",
   "type": "module",
+ 
   "scripts": {
     "prepare": "tsc",
     "build": "tsc",
-    "dev": "ts-node-dev src/index.ts",
-    "test": "jest --coverage  --watchAll --detectOpenHandles"
+    "package1:dev": "cd packages/package1 && npm run dev",
+    "package2:dev": "cd packages/package2 && npm run dev",
+    "dev": "npm-run-all --parallel package1:dev package2:dev",
+    "test": "jest --coverage --watchAll --detectOpenHandles"
   },
   "author": "Priyanka Choudhary",
   "license": "ISC",

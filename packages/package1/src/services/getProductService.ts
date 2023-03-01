@@ -9,6 +9,8 @@ export async function getProduct() {
         console.log(data);
         return data;
     } catch (err: any) {
-        console.error('Error in In getProductService.getProduct : ' + err.message +' '+ err.code);
+        console.error('Error in In getProductService.getProduct : ' + err.message );
     }
 }
+
+module.exports = {getProduct};

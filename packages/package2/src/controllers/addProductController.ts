@@ -13,16 +13,16 @@ export const createProduct = async (req: Request, res: Response) => {
             console.log(prodName);
             const checkProductAvailable = await addProductService.checkProduct(prodName);
             if (checkProductAvailable)
-                 res.status(409).json({ 'message': `Product with name: ${req.body.prod_name} already exists.` }); //conflict
+                return res.status(409).json({ 'message': `Product with name: ${req.body.prod_name} already exists.` }); //conflict
 
             console.log(req.body);
             await addProductService.create(req.body);
-            res.status(201).json({ 'message': 'New product created successfully!!' });
+            return res.status(201).json({ "message": "New product created successfully!!" });
         }
     } catch (err: any) {
         console.error('Error in productController.createProduct : ' + err.message);
-               
+        return res.status(500).json({'message':`${err.message}`})
     }
 }
 
-module.exports = { createProduct }
+ module.exports = { createProduct }

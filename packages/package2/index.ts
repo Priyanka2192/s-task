@@ -1,4 +1,3 @@
-require('dotenv').config();
 import app from 'package1/index';
 import express from 'express';
 
