@@ -3,29 +3,17 @@ import { getProductList } from '../getProductcontroller';
 const getProductService = require('../../services/getProductService')
 jest.mock('../../services/getProductService')
 
-let mockResponse: Function
-let responseBody: any = {}
-let status: number
+let mockResponse: Partial<Response> = {}
 let request: Partial<Request> = {}
-// let next: Partial<NextFunction> = {}
 
 beforeEach(() => {
-    responseBody = {}
-    request = {}
-    status = 0
-    // next = jest.fn().mockImplementation()
-    mockResponse = () => {
-        const res: any = {};
-        res.status = jest.fn().mockImplementation((statusCode: number) => {
-            status = statusCode
-            return res
-        })
-        res.json = jest.fn().mockImplementation((result: any) => {
-            responseBody = result
-        })
-        return res;
-    };
     jest.clearAllMocks();
+    mockResponse = {}
+    request = {}
+    mockResponse = {
+        json: jest.fn(),
+        status: jest.fn().mockReturnThis()
+    };
 })
 
 describe('Check the response for POST request', () => {
@@ -43,10 +31,9 @@ describe('Check the response for POST request', () => {
             "prod_price": "Rs 678"
         }];
         getProductService.getProduct = jest.fn().mockImplementation(() => Promise.resolve(data))
-        const result = await getProductList(request as Request, mockResponse() as Response);
-        expect(status).toBe(200);
-        console.log(responseBody);
-        expect(responseBody).toEqual([{
+        await getProductList(request as Request, mockResponse as Response);
+        expect(mockResponse.status).toHaveBeenCalledWith(200);
+        expect(mockResponse.json).toHaveBeenCalledWith([{
             "prod_id": 1,
             "prod_name": "Product 1",
             "prod_description": "Description 1",
@@ -63,7 +50,8 @@ describe('Check the response for POST request', () => {
     it('should throw an error with status 500', async () => {
         const error = new Error('Internal server error');
         getProductService.getProduct = jest.fn().mockImplementation(() => Promise.reject(error))
-        await getProductList(request as Request, mockResponse() as Response);
-        expect(status).toBe(500);
+        await getProductList(request as Request, mockResponse as Response);
+        expect(mockResponse.status).toHaveBeenCalledWith(500);
+        expect(mockResponse.json).toHaveBeenCalledWith({"message": "Internal server error"})
     });
 });
